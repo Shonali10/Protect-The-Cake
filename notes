@@ -1,0 +1,4 @@
+if we are not putting else condition in line 130,then even after suzie stops touching the spray, the ants are unconcious or not moving
+when putting the else condition and writing bounce off and velocity code (for ants) in it, and removing from the function draw, then ants are bouncing rapidly  (i think looping)
+when writing bounce off and velocity code (for ants) in a new function andd calling it in else condition then also ants are bouncing rapidly
+what can be done to make the ants bounce off but become unconcious(still) when suzie is touching spray? 
