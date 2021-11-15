@@ -33,7 +33,7 @@ resetImg= loadImage("images/reset.png");
 
 function setup(){
 createCanvas(1366,625);
-edges = createEdgeSprites();
+
 wall1 = createSprite(150, 300, 20, 200);
 wall2 = createSprite(1216, 300, 20, 200);
 wall3 = createSprite(230, 300, 150, 20);
@@ -52,6 +52,8 @@ cake = createSprite(683,312.5);
 cake.addImage(cakeimg);
 cake.scale = 0.28
 
+
+
 //Doubt - how to make suzie appear randomly in these four positions -
 //(1) 1000,100
 //(2)366,100
@@ -69,35 +71,36 @@ suzie.scale = 0.19
 ant1 =createSprite(1346,20,30,30);
    ant1.addImage(antimg);
    ant1.scale = 0.085;
-   ant1.velocityX= 1.5
-   ant1.velocityY= 1.5
 
    ant2 =createSprite(20,605,30,30);
    ant2.addImage(antimg);
    ant2.scale = 0.085;
-   ant2.velocityX= 1.5
-   ant2.velocityY= 1.5
    
    ant3 =createSprite(20,20,30,30);
    ant3.addImage(antimg);
    ant3.scale = 0.085;
-   ant3.velocityX= 1.5
-   ant3.velocityY= 1.5
-
+   
+   
 sprayGroup=new Group();
 bubbleGroup=new Group();
 antGroup=new Group();
-antGroup.add(ant1);
-antGroup.add(ant2);
-antGroup.add(ant3);
 
+antGroup.add(ant1);
+   antGroup.add(ant2);
+   antGroup.add(ant3);
+   
+   antGroup.setVelocityXEach( 1.5) ;
+   antGroup.setVelocityYEach( 1.5) ;
+   
+  
 }
 
 function draw(){
 
 background(205,255,230);
-
+edges = createEdgeSprites();
 suzie.collide(edges);
+
 
 
 if(keyDown("left")){
@@ -125,70 +128,35 @@ if(keyDown("down")){
 spawnSpray();
 spawnBubble();
 if(suzie.isTouching(sprayGroup)){
-unconsciousAnts();
-}else{
-   antsWake();
-   
-}
+   antGroup.setVelocityXEach(0) ;
+   antGroup.setVelocityYEach(0) ;
+   }else{
+antsWake();
+       
+   }
+
 protectBubble();
 
-
-      if(ant1.isTouching(cake) || ant2.isTouching(cake) || ant3.isTouching(cake)){
-        cake.addImage (cakeimg1);
-        cake.lifetime = 20;
-        cake.addImage (cakeimg2);
-        gameState = END;
-      }
+      
    }
+
    if(gameState === END){
       sprayGroup.destroyEach();
       bubbleGroup.destroyEach();
       suzie.x = 30;
       suzie.y = 30;
       suzie.changeImage("cry",suzie_cry);
-      ant1.destroy();
-      ant2.destroy();
-      ant3.destroy();
+     
+
 var gameover = createSprite(683,312.5);
 gameover.addImage(gameoverImg);
 var reset = createSprite(800,312.5);
 reset.addImage(resetImg);
    }
-   ant1.bounceOff(edges);
-   ant2.bounceOff(edges);
-   ant3.bounceOff(edges);
-   
-   
-   ant1.bounceOff(wall1);
-   ant1.bounceOff(wall2);
-   ant1.bounceOff(wall3);
-   ant1.bounceOff(wall4);
-   ant1.bounceOff(wall5);
-   ant1.bounceOff(wall6);
-   
-   ant2.bounceOff(wall1);
-   ant2.bounceOff(wall2);
-   ant2.bounceOff(wall3);
-   ant2.bounceOff(wall4);
-   ant2.bounceOff(wall5);
-   ant2.bounceOff(wall6);
-   
-   ant3.bounceOff(wall1);
-   ant3.bounceOff(wall2);
-   ant3.bounceOff(wall3);
-   ant3.bounceOff(wall4);
-   ant3.bounceOff(wall5);
-   ant3.bounceOff(wall6);
-   
-   ant1.bounceOff(suzie);
-   ant2.bounceOff(suzie);
-   ant3.bounceOff(suzie);
-   
-   // ant1.bounce(ant2);
-   // ant1.bounce(ant3);
-   // ant2.bounce(ant3);
+
 
    drawSprites();
+
 
 }
 
@@ -213,64 +181,6 @@ function spawnBubble(){
       bubble.lifetime = 150;
       }
       }
-function unconsciousAnts(){
-  
-      ant1.velocityX= 0;
-      ant1.velocityY= 0;
-      
-      ant2.velocityX= 0;
-      ant2.velocityY= 0;
-   
-      ant3.velocityX= 0;
-      ant3.velocityY= 0;
-      }
-   
-   function antsWake(){
-
-      ant1.velocityX= 1.5;
-      ant1.velocityY= 1.5;
-      
-      ant2.velocityX= 1.5;
-      ant2.velocityY= 1.5;
-   
-      ant3.velocityX= 1.5;
-      ant3.velocityY= 1.5;
-
-      // ant1.bounceOff(edges);
-      // ant2.bounceOff(edges);
-      // ant3.bounceOff(edges);
-      
-      
-      // ant1.bounceOff(wall1);
-      // ant1.bounceOff(wall2);
-      // ant1.bounceOff(wall3);
-      // ant1.bounceOff(wall4);
-      // ant1.bounceOff(wall5);
-      // ant1.bounceOff(wall6);
-      
-      // ant2.bounceOff(wall1);
-      // ant2.bounceOff(wall2);
-      // ant2.bounceOff(wall3);
-      // ant2.bounceOff(wall4);
-      // ant2.bounceOff(wall5);
-      // ant2.bounceOff(wall6);
-      
-      // ant3.bounceOff(wall1);
-      // ant3.bounceOff(wall2);
-      // ant3.bounceOff(wall3);
-      // ant3.bounceOff(wall4);
-      // ant3.bounceOff(wall5);
-      // ant3.bounceOff(wall6);
-      
-      // ant1.bounceOff(suzie);
-      // ant2.bounceOff(suzie);
-      // ant3.bounceOff(suzie);
-      
-      // ant1.bounce(ant2);
-      // ant1.bounce(ant3);
-      // ant2.bounce(ant3);
-
-   }
 
 function protectBubble(){
    if(suzie.isTouching(bubbleGroup)){
@@ -283,3 +193,17 @@ function protectBubble(){
    }
     
 }
+function antsWake(){
+
+   antGroup.setVelocityXEach( 1.5) ;
+   antGroup.setVelocityYEach( 1.5) ;
+   antGroup.bounceOff(edges);
+   antGroup.bounceOff(suzie);
+   antGroup.bounceOff(wall1);
+   antGroup.bounceOff(wall2);
+   antGroup.bounceOff(wall3);
+   antGroup.bounceOff(wall4);
+   antGroup.bounceOff(wall5);
+   antGroup.bounceOff(wall6);
+
+   }
